@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Dimensions,
   FlatList,
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -39,6 +40,34 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: WINDOW_WIDTH,
     height: WINDOW_HEIGHT-120
+  },
+  contentContainerStyle: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  imageContainer: {
+    flex: 1,
+    width: 300,
+    height: 300,
+    marginTop: 10
+  },
+  postImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  postContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    width: WINDOW_WIDTH-50,
+    borderRadius: 5,
+    marginVertical: 5
+  },
+  description: {
+    fontSize: 16
   }
 })
 
@@ -46,13 +75,20 @@ class NewsScreen extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      posts: this.props.posts
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({posts: nextProps.posts})
   }
 
   render() {
     return (
       <View style={styles.container}>
-      {this.renderTakeAPictureButton()}
-
+        {this.renderTakeAPictureButton()}
         {this.renderPosts()}
       </View>
     )
@@ -80,22 +116,28 @@ class NewsScreen extends Component {
   }
 
   renderPosts() {
-    console.log('this.props.posts', this.props.posts)
     return (
       <FlatList
-        data = {[this.props.posts]}
+        data = {this.state.posts.posts}
         renderItem = {this.renderPost}
-        style={styles.flatlist}
+        style = {styles.flatlist}
+        contentContainerStyle = {styles.contentContainerStyle}
       />
     )
   }
 
   renderPost(post) {
     console.log('post', post)
-
     return (
-      <View>
-        <Text>{post.item.description}</Text>
+      <View style={styles.postContainer}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={post.item.image}
+            resizeMode="contain"
+            style={styles.postImage}
+          />
+        </View>
+        <Text style={styles.description}>{post.item.description}</Text>
       </View>
     )
   }

@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 300,
     height: 300,
-    backgroundColor: 'pink'
   },
   postButton: {
     backgroundColor: '#885ead',

@@ -11,11 +11,11 @@ export default (state = initialState, action) => {
         image: action.payload.image,
         description: action.payload.description
       }
-      let newPosts = state.posts;
-      newPosts.push(newPost)
+      let posts = state.posts;
+      posts.push(newPost)
       return {
         ...state,
-        posts: newPosts
+        posts
       }
       break;
     default:
