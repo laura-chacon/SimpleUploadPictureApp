@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { connect } from 'react-redux'
+import { newPostCreated } from '../actions'
 
 var WINDOW_WIDTH  = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -86,13 +88,8 @@ class EditPictureScreen extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.navigate(
-            'News',
-            {
-              'image': image,
-              photoDescription: this.state.photoDescription
-            }
-          )
+          this.props.newPostCreated(image, this.state.photoDescription)
+          this.props.navigation.navigate('News')
         }}
         style = {styles.postButton}
       >
@@ -103,4 +100,4 @@ class EditPictureScreen extends Component {
 
 }
 
-export default EditPictureScreen;
+export default connect(null, { newPostCreated })(EditPictureScreen);
