@@ -8,6 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Camera from 'react-native-camera';
+import ImagePicker from 'react-native-image-crop-picker';
 
 var WINDOW_WIDTH  = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -43,7 +44,16 @@ class NewsScreen extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Camera')}
+          onPress={() => {
+            ImagePicker.openCamera({
+              width: 300,
+              height: 300,
+              cropping: true
+            }).then(image => {
+              this.props.navigation.navigate('EditPicture', {'image': image})
+            });
+
+          }}
           style = {styles.takePictureButton}
         >
             <Text style={styles.textButton}>TAKE A PICTURE</Text>
